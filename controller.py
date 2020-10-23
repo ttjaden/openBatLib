@@ -21,7 +21,7 @@ class Controller(object):
 
         self.view = view.View()
 
-    def sim(self, fmat, fparameter, system, ref_case, dt=1):
+    def sim(self, fmat, data_frame, fparameter, system, ref_case, dt=1):
         
         # Load system parameters
         parameter = self._load_parameter(fparameter, system)
@@ -31,6 +31,10 @@ class Controller(object):
 
         # Load data from reference cases (load and inverter parameters)
         parameter, pl = self._load_ref_case(parameter, fmat, fparameter, ref_case)
+
+        ppv = data_frame['ppv'].to_numpy()
+        
+        pl = data_frame['L'].to_numpy()
 
         # Call model for AC coupled systems
         if parameter['Top'] == 'AC':

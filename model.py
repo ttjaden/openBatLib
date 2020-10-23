@@ -8,6 +8,7 @@ from numba import njit
 import pandas as pd
 import time
 import datetime
+import concurrent.futures
 import csv
 from pyModbusTCP.client import ModbusClient
 from pyModbusTCP import utils
@@ -107,18 +108,30 @@ class BatModAC(object):
         self.Ppvs = Ppvs
         self.Pperi = Pperi
         self.dt = dt
-
+        
         # Initialization and preallocation
-        self.Pbat = np.zeros_like(self.ppv)  # DC power of the battery in W
-        self.Pbs = np.zeros_like(ppv)
-        self.soc = np.zeros_like(self.ppv)  # State of charge of the battery
+        self.Pbat = np.zeros_like(self.Pr)  # DC power of the battery in W
+        self.Pbs = np.zeros_like(self.Pr)
+        self.soc = np.zeros_like(self.Pr)  # State of charge of the battery
         self.th = 0  # Start threshold for the recharging of the battery
-        self.soc0 = 0  # State of charge of the battery in the first time step
-        self.Pbs0 = 0
+        self.soc0 = 0.05  # State of charge of the battery in the first time step
+        self.Pbs0 = 0 # State of the AC charging power in the first time step
 
         self.simulation()
 
-        self.bat_mod_res()
+        print('Mean Pbs = ', np.mean(self.Pbs))
+        print('Mean Pbat = ', np.mean(self.Pbat))
+
+        df = pd.DataFrame(self.soc*100, columns=["soc"])
+        df['Pr'] = self.Pr
+        df['Pbs'] = self.Pbs
+        df['Pbat'] = self.Pbat
+
+        df.to_csv('/Users/kairosken/Documents/Bachelorarbeit/plenticore_Bl_Simulation.csv')
+
+        print(df)
+
+        #self.bat_mod_res()
 
     def simulation(self, pvmod=True):
         # PerModAC: Performance Simulation Model for AC-coupled PV-Battery Systems
@@ -126,13 +139,9 @@ class BatModAC(object):
         TODO: Preallocation verschieben
               Pr anpassen
         '''
-
-        # 3.3 Simulation of the battery system
-        start = time.time()
         self.Pbat, self.Pbs, self.soc, self.soc0, self.Pbs0 = BatMod_AC(
             self.d, self.dt, self.soc0, self.soc, self.Pr, self.Pbs0, self.Pbs, self.Pbat)
-        end = time.time()
-        print('Elapsed time for BatMod_AC: ', end-start)
+
     def bat_mod_res(self):
         self.E = bat_res_mod(
             self.parameter, self.pl, self.Ppv, self.Pbat, self.dt, self.Ppvs, self.Pbs, self.Pperi)
@@ -596,6 +605,7 @@ def BatMod_AC(d, _dt, _soc0, _soc, _Pr, _Pbs0, _Pbs, _Pbat):
 
         # Transfer the realized AC power of the battery system and
         # the DC power of the battery
+        
         _Pbs[t] = P_bs
         _Pbs0 = P_bs
         _Pbat[t] = P_bat
