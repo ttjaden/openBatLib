@@ -13,11 +13,11 @@ mat = r'/Users/kairosken/Documents/Bachelorarbeit/PerMod 2.1/PerModInput.mat'
 #parameter = r"C:\Users\kroes\Nextcloud\Shares\09_Studierende\Persönliche Ordner\Kai\Bachelorarbeit\PerMod 2.1\PerModPAR.xlsx"
 #parameter = r'/home/kai/Dokumente/Bachelorarbeit/PerMod 2.1/PerModPAR.xlsx'
 # File path to parameter macOS
-parameter = r'/Users/kairosken/Documents/Bachelorarbeit/PerMod 2.1/PerModPAR.xlsx'
+parameter = r'/Users/kairosken/Documents/Bachelorarbeit/PerMod 2.1/PerModPAR_Debug_LT.xlsx'
 # File path for Linux
 #parameter = r'/home/kai/Dokumente/openBatLib/Data/PerModPAR.xlsx'
 # File path for macOS
-fname_test = r'/Users/kairosken/Documents/Bachelorarbeit/Zeitreihe_Testlauf.csv'
+fname_test = r'/Users/kairosken/Documents/Bachelorarbeit/Python/Data Log/Dauertest/Zeitreihe_Testlauf.csv'
 #File path for Linux
 #fname_test = r'/home/kai/Dokumente/openBatLib/Data/Zeitreihe_Testlauf.csv'
 system = 'G'
@@ -38,7 +38,7 @@ Pbat = np.array([0.0])
 # File path for macOS
 #csv_file = '/Users/kairosken/Documents/Bachelorarbeit/Python/plenticore_Bl.csv'
 # File path for Linux PC
-csv_file = '/home/kai/Dokumente/openBatLib/Data/plenticore_Bl_test_run_1_week.csv'
+#csv_file = '/home/kai/Dokumente/openBatLib/Data/plenticore_Bl_test_run_1_week.csv'
 
 SERVER_HOST = "192.168.208.106"
 SERVER_PORT = 1502
