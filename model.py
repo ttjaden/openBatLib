@@ -558,7 +558,7 @@ def BatMod_AC(d, _dt, _soc0, _soc, _Pr, _Pbs0, _Pbs, _Pbat):
             else:
                 P_bs = _tde * _Pbs0 + _tde * \
                     (P_bs - _Pbs0) * _ftde + P_bs * (not _tde)
-
+        _SOC_h = 1
         # Decision if the battery should be charged or discharged
         if P_bs > 0 and _soc0 < 1 - _th * (1 - _SOC_h):
             # The last term th*(1-SOC_h) avoids the alternation between
