@@ -127,7 +127,7 @@ class BatModAC(object):
         df['Pbs'] = self.Pbs
         df['Pbat'] = self.Pbat
 
-        df.to_csv('/Users/kairosken/Documents/Bachelorarbeit/Python/Data Log/Dauertest/plenticore_Bl_Simulation_TZ_EZ_soc_Pbat_angepassst.csv')
+        df.to_csv('/Users/kairosken/Documents/Bachelorarbeit/Python/Data Log/Dauertest/plenticore_Bl_Simulation_TZ_EZ_soc_soc_h_bat_angepassst.csv')
 
         print(df)
 
@@ -558,9 +558,9 @@ def BatMod_AC(d, _dt, _soc0, _soc, _Pr, _Pbs0, _Pbs, _Pbat):
             else:
                 P_bs = _tde * _Pbs0 + _tde * \
                     (P_bs - _Pbs0) * _ftde + P_bs * (not _tde)
-        _SOC_h = 1
+        #_SOC_h = 1
         # Decision if the battery should be charged or discharged
-        if P_bs > 0 and _soc0 < 1 - _th * (1 - _SOC_h):
+        if P_bs > 0 and _soc0 < 1:# - _th * (1 - _SOC_h):
             # The last term th*(1-SOC_h) avoids the alternation between
             # charging and standby mode due to the DC power consumption of the
             # battery converter when the battery is fully charged. The battery
