@@ -127,7 +127,7 @@ class BatModAC(object):
         df['Pbs'] = self.Pbs
         df['Pbat'] = self.Pbat
 
-        df.to_csv('/Users/kairosken/Documents/Bachelorarbeit/Python/Data Log/Dauertest/plenticore_Bl_Simulation.csv')
+        df.to_csv('/Users/kairosken/Documents/Bachelorarbeit/Python/Data Log/Dauertest/plenticore_Bl_Simulation_angepasst_test.csv')
 
         print(df)
 
@@ -575,7 +575,7 @@ def BatMod_AC(d, _dt, _soc0, _soc, _Pr, _Pbs0, _Pbs, _Pbat):
             P_bat = np.maximum(
                 0, P_bs - (_AC2BAT_a_in * p_bs * p_bs + _AC2BAT_b_in * p_bs + _AC2BAT_c_in))
 
-        elif P_bs < 0 and _soc0 > 0:
+        elif P_bs < 0 and _soc0 > 0.05:
 
             # Normalized AC power of the battery system
             p_bs = np.abs(P_bs / _P_BAT2AC_out / 1000)
@@ -591,13 +591,13 @@ def BatMod_AC(d, _dt, _soc0, _soc, _Pr, _Pbs0, _Pbs, _Pbat):
             P_bat = 0
 
         # Decision if the standby mode is active
-        if P_bat == 0 and _soc0 <= 0:  # Standby mode in discharged state
+        if P_bat == 0 and _soc0 <= 0.05:  # Standby mode in discharged state
 
             # DC and AC power consumption of the battery converter
             P_bat = -np.maximum(0, _P_SYS_SOC0_DC)
             P_bs = _P_SYS_SOC0_AC
 
-        elif P_bat == 0 and _soc0 > 0:  # Standby mode in fully charged state
+        elif P_bat == 0 and _soc0 > 0.05:  # Standby mode in fully charged state
 
             # DC and AC power consumption of the battery converter
             P_bat = -np.maximum(0, _P_SYS_SOC1_DC)
