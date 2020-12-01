@@ -526,10 +526,11 @@ def BatMod_AC(d, _dt, _soc0, _soc, _Pr, _Pbs0, _Pbs, _Pbat):
 
         # Reduce P_bs to avoid over charging of the battery
         if E_bs_est > 0 and E_bs_est > (_E_BAT - E_b0):
-            P_bs = (_E_BAT - E_b0) / _dt * 3600
-        # When charging take the correction factor into account
+            P_bs = (_E_BAT - E_b0) * 3600 / _dt
+        # When discharging take the correction factor into account
         elif E_bs_est < 0 and np.abs(E_bs_est) > (E_b0):
-            P_bs = (E_b0) / _dt * 3600 * (1-corr)
+            P_bs = (E_b0 * 3600 / _dt) * (1-corr)
+        
 
         # Adjust the AC power of the battery system due to the stationary
         # deviations taking the minimum charging and discharging power into
