@@ -717,7 +717,7 @@ def BatMod_DC(d, _dt, _soc0, _soc, _Pr, _Prpv,  _Ppv, _Ppv2bat_in0, _Ppv2bat_in,
             P_rpv = (_E_BAT - E_b0) / _dt * 3600
         # wenn Laden, dann neue Ladeleistung inkl. Korrekturfaktor
         elif E_bs_r < 0 and np.abs(E_bs_r) > (E_b0):
-            P_r = (E_b0) / _dt * 3600 * (1-corr)
+            P_r = ((E_b0) / _dt * 3600) * (1-corr)
 
         # Decision if the battery should be charged or discharged
         if P_rpv > 0 and _soc0 < 1 - _th * (1 - _SOC_h):
@@ -962,7 +962,7 @@ def BatMod_PV(d, _dt, _soc0, _soc, _Ppv, _Pac, _Ppv2bat_in0, _Ppv2bat_in, _Ppv2a
             P_rpv = (_E_BAT - E_b0) / _dt * 3600
         # When charging take the correction factor into account
         elif E_bs_rpv < 0 and np.abs(E_bs_rpv) > (E_b0):
-            P_rpv = (E_b0) / _dt * 3600 * (1-corr)
+            P_rpv = ((E_b0) / _dt * 3600) * (1-corr)
 
         # Decision if the battery should be charged or discharged
         if P_rpv > _P_PV2BAT_min and _soc0 < 1 - _th * (1 - _SOC_h):
